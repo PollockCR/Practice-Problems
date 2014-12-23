@@ -20,15 +20,17 @@ class List{
     Node* cursor;
 };
 
-List& partitionAround( int x, const List &copyList ){
+Node* partitionAround( int x, Node* ptr ){
   List a;
   List b;
-  Node* ptr = copyList.head;
   Node* aPtr = a.head;
+  Node* aHead = a.head;
   Node* bPtr = b.head;
+  Node* bHead = b.head;
   while( ptr != NULL ){
     if( ptr->data < x ){
       aPtr = new Node( ptr->data, NULL );
+      aLast = aPtr; // for merging so doesn’t have empty node between
       aPtr = aPtr->next;
     } else {
       bPtr = new Node( ptr->data, NULL );
@@ -36,6 +38,8 @@ List& partitionAround( int x, const List &copyList ){
     }
     ptr = ptr->next;
   }
-  aPtr = b.head;
-  return a;
+  aLast->next = bHead;
+  return aHead;
 }
+
+
