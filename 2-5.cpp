@@ -42,3 +42,27 @@ Node* addListDigits( Node* a, Node* b ){
   }
   return tHead;
 }
+
+// Given solution that doesn't make sense to me
+
+Node* addLists( Node* l1, Node* l2, int carry ){
+  if( l1 == NULL && l2 == NULL && carry == 0){
+    return NULL;
+  } 
+  Node* result = new Node( 0, NULL );
+  int value = carry;
+  if( l1 != NULL ){
+    value += l1->data;
+    l1=l1->next;
+  }
+  if( l2 != NULL ){
+    value += l2->data;
+    l2=l2->next;
+  }
+  result->data = value%10;
+  if( l1!=NULL || l2!=NULL ){
+    Node* more = addLists( l1, l2, value/10 );
+    result->next = more;
+  }
+  return result;
+}
