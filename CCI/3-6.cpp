@@ -33,7 +33,12 @@ int Stack::pop(){
   return value;
 }
 
-void sortStack(){
+
+
+
+
+// my solution (I think mine works, but it did not use push and pop as often as it should…)
+void Stack::sortStack(){
   Node *ptr = top;
   Stack source;
   int temp;
@@ -54,4 +59,17 @@ void sortStack(){
   while( !source.isEmpty() ){
     push( source.pop() );
   }
+}
+
+// given solution 
+Stack& sort( Stack s ){
+  Stack r = new Stack();
+  while( !isEmpty() ){
+    int temp = s.pop(); // step 1
+    while( !r.isEmpty() && r.peek() > temp ){ // step 2
+      s.push( r.pop() );
+    }
+    r.push( temp ); // step 3
+  }
+  return r;
 }
