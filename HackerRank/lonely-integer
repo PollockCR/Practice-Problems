@@ -1,0 +1,70 @@
+/* problem found here: https://www.hackerrank.com/challenges/lonely-integer
+
+Problem Statement
+There are N integers in an array A. All but one integer occur in pairs. Your task is to find out the number that occurs only once.
+Input Format
+The first line of the input contains an integer N indicating number of integers. 
+The next line contains N space separated integers that form the array A.
+Constraints
+1 <= N < 100 
+N % 2 = 1 ( N is an odd number ) 
+0 <= A[i] <= 100, ∀ i ∈ [1, N]
+Output Format
+Output S, the number that occurs only once.
+*/
+
+#include <map>
+#include <set>
+#include <list>
+#include <cmath>
+#include <ctime>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <bitset>
+#include <cstdio>
+#include <limits>
+#include <vector>
+#include <cstdlib>
+#include <numeric>
+#include <sstream>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int lonelyinteger(vector < int > a);
+int main() {
+    int res;
+    
+    int _a_size;
+    cin >> _a_size;
+    cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n'); 
+    vector<int> _a;
+    int _a_item;
+    for(int _a_i=0; _a_i<_a_size; _a_i++) {
+        cin >> _a_item;
+        _a.push_back(_a_item);
+    }
+    
+    res = lonelyinteger(_a);
+    cout << res;
+    
+    return 0;
+}
+
+int lonelyinteger(vector <int> a) {
+  bool found[100];
+  for( int i = 0; i < 100; i++ ){ found[i] = false; }
+  for( int i = 0; i < a.size(); i++ ){
+    if( found[ a[i] ] == true ){
+      found[ a[i] ] = false;
+    } else {
+      found[ a[i] ] = true;
+    }
+  }
+  for( int i = 0; i < 100; i++ ){
+    if( found[ a[i]] == true ){
+      return a[i];
+    }
+  }
+  return a[0];
+}
