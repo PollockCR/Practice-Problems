@@ -46,8 +46,7 @@ bool testPangram( string a ){
   for( int i = 0; i < a.size(); i++ ){
     c = a[i];
     if( isalpha( c )){
-      c = tolower( c );
-      lettersFound[ c - 'a' ] = true;
+      lettersFound[ tolower(c) - 'a' ] = true;
     }
   }
   for( int i = 0; i < 26; i++ ){
