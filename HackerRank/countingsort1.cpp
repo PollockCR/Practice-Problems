@@ -22,10 +22,9 @@ int main() {
 }
 
 void countVals( vector<int> &a ){
-  vector<int> b;
+  vector<int> b (100, 0);
   int val;
   vector<int>::iterator it;
-  b.assign( 100, 0 );
   int i;
   for( it = a.begin(); it != a.end(); it++ ){
     b[*it]++;
