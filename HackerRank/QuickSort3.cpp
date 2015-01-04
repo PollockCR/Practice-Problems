@@ -1,5 +1,4 @@
 // Found here: https://www.hackerrank.com/challenges/quicksort3
-
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -26,7 +25,7 @@ int main() {
 
 
 void quickSort(vector <int>  &ar, int start, int end){
-  int i, temp, piv, numLess=0, cur = start;
+  int i, temp, piv, cur = start;
   if( end-start < 2 ){
   } else if ( end-start == 2 ){
     if( ar[start] > ar[end-1] ){
@@ -36,7 +35,7 @@ void quickSort(vector <int>  &ar, int start, int end){
     }
   } else {
     piv = ar[end-1];
-    for( i = start; i < end; i++ ){
+    for( i = start; i < end-1; i++ ){
       if( ar[i] < piv ){
         if( i != cur ){
           temp = ar[cur];
@@ -46,12 +45,13 @@ void quickSort(vector <int>  &ar, int start, int end){
         cur++;
       }
     }
-    temp = ar[cur];
-    ar[cur] = piv;
-    ar[end-1] = temp;
+    if( ar[cur] > piv ){
+      ar[end-1] = ar[cur];
+      ar[cur] = piv;
+    }
     printAr( ar );
     quickSort( ar, start, cur);
-    quickSort( ar, cur+1, end);
+    quickSort( ar, cur, end);
   }
 }
 
@@ -61,3 +61,6 @@ void printAr(vector<int> ar){
   }
   cout << endl;
 }
+
+
+
