@@ -51,7 +51,7 @@ void quickSort(vector <int>  &ar, int start, int end){
     }
     printAr( ar );
     quickSort( ar, start, cur);
-    quickSort( ar, cur, end);
+    quickSort( ar, cur+1, end);
   }
 }
 
