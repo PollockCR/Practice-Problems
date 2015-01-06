@@ -1,4 +1,5 @@
-// Found here: https://www.hackerrank.com/challenges/quicksort3
+// https://www.hackerrank.com/challenges/closest-numbers
+
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -7,22 +8,20 @@
 using namespace std;
 
 void quickSort(vector <int> &, int, int);
-void printAr(vector<int> ar);
+void findMinDif(vector<int> ar);
 
 int main() {
- vector <int>  _ar;
-  int _ar_size;
-  cin >> _ar_size;
-  for(int _ar_i=0; _ar_i<_ar_size; _ar_i++) {
-    int _ar_tmp;
-    cin >> _ar_tmp;
-    _ar.push_back(_ar_tmp); 
+  vector <int> ar;
+  int arSize, i, val;
+  cin >> arSize;
+  for( int i=0; i < arSize; i++ ) {
+    cin >> val;
+    ar.push_back(val); 
   }
-  quickSort(_ar, 0, _ar_size);
+  quickSort( ar, 0, arSize );
+  findMinDif( ar );
   return 0;
 }
-
-
 
 void quickSort(vector <int>  &ar, int start, int end){
   int i, temp, piv, cur = start;
@@ -49,18 +48,28 @@ void quickSort(vector <int>  &ar, int start, int end){
       ar[end-1] = ar[cur];
       ar[cur] = piv;
     }
-    printAr( ar );
     quickSort( ar, start, cur);
-    quickSort( ar, cur+1, end);
+    quickSort( ar, cur, end);
   }
 }
 
-void printAr(vector<int> ar){
-  for( int i = 0; i < ar.size(); i++ ){
-    cout << ar[i] << ' ';
+void findMinDif( vector<int> ar ){
+  int min = ar[1]-ar[0];
+  int cur, i;
+  vector<int> minPairs;
+  int frontI, backI;
+  for( frontI = 1, backI = 0; frontI < ar.size(); frontI++, backI++){
+    cur = ar[ frontI ] - ar[ backI ];
+    if( cur < min ){
+      minPairs.clear();
+      min = cur;
+    }
+    if( cur == min ){
+      minPairs.push_back( ar[ backI ] );
+      minPairs.push_back( ar[ frontI ] );
+    }
   }
-  cout << endl;
+  for( i = 0; i < minPairs.size(); i++ ){
+    cout << minPairs[i] << ' ';
+  }
 }
-
-
-
