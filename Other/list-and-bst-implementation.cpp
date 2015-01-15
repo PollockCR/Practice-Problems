@@ -1,4 +1,5 @@
 // Implementing data structures
+// Just for practice as I would in an interview. These are not complete because I only implemented the more challenging functions. 
 
 class List // without a cursor, also can be done with a cursor
 {
