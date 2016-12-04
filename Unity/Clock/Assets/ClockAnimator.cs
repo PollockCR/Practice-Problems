@@ -9,11 +9,19 @@ public class ClockAnimator : MonoBehaviour {
 		minutesToDegrees = 360f / 60f,
 		secondsToDegrees = 360f / 60f;
 
-	private void Update () {
-		DateTime time = DateTime.Now;
-		hours.localRotation = Quaternion.Euler(0f, 0f, time.Hour * -hoursToDegrees);
-		minutes.localRotation = Quaternion.Euler(0f, 0f, time.Minute * -minutesToDegrees);
-		seconds.localRotation = Quaternion.Euler(0f, 0f, time.Second * -secondsToDegrees);
+	public bool analog;
 
+	private void Update () {
+		if (analog) {
+			TimeSpan timespan = DateTime.Now.TimeOfDay;
+			hours.localRotation = Quaternion.Euler (0f, 0f, (float)timespan.TotalHours * -hoursToDegrees);
+			minutes.localRotation = Quaternion.Euler (0f, 0f, (float)timespan.TotalMinutes * -minutesToDegrees);
+			seconds.localRotation = Quaternion.Euler (0f, 0f, (float)timespan.TotalSeconds * -secondsToDegrees);
+		} else {
+			DateTime time = DateTime.Now;
+			hours.localRotation = Quaternion.Euler (0f, 0f, time.Hour * -hoursToDegrees);
+			minutes.localRotation = Quaternion.Euler (0f, 0f, time.Minute * -minutesToDegrees);
+			seconds.localRotation = Quaternion.Euler (0f, 0f, time.Second * -secondsToDegrees);
+		}
 	}
 }
