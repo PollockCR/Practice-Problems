@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/catlike_scene1.unity
+- path: Assets/Scenes/Shapes in Space.unity
   isLoaded: 1
   isActive: 1
