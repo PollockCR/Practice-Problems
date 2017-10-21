@@ -1,3 +1,5 @@
+// https://www.hackerrank.com/challenges/mini-max-sum
+
 #include <cmath>
 #include <cstdio>
 #include <vector>
