@@ -66,8 +66,9 @@ bool Stack::mthFromLast(int m, int &data){
     return false;
   }
   for(int i = 0; i < m; i++){
-    lead = lead->getNext();
-    if(!lead){
+    if(lead->getNext()){
+      lead = lead->getNext();
+    } else {
       return false;
     }
   }
