@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <limits>
+#include <stack>
 using namespace std;
 
 class BinaryTree{
@@ -24,6 +25,11 @@ protected:
   Node* searchHelper(Node * root, int d);
   void showHelper(Node * root, int level);
   int heightHelper(Node * root);
+  void preorderHelper(Node * root);
+  void inorderHelper(Node * root);
+  void postorderHelper(Node * root);
+  void preorderNoRecursionHelper(Node * root);
+  Node* findLowestCommonAncestorHelper(Node * root, int val1, int val2);
 public:
   BinaryTree() {root = NULL;}
   ~BinaryTree();
@@ -32,6 +38,11 @@ public:
   Node* search(int d);
   void showStructure();
   int height();
+  void preorder();
+  void inorder();
+  void postorder();
+  void preorderNoRecursion();
+  Node* findLowestCommonAncestor(int val1, int val2);
 };
 
 BinaryTree::~BinaryTree(){
@@ -172,12 +183,96 @@ int BinaryTree::heightHelper(Node * root){
                       heightHelper(root->getRight()));
 }
 
+void BinaryTree::preorder(){
+  preorderHelper(root);
+  cout << endl;
+}
+
+void BinaryTree::preorderHelper(Node * root){
+  if(root != NULL){
+    cout << root->getData() << ' ';
+    preorderHelper(root->getLeft());
+    preorderHelper(root->getRight());
+  }
+}
+
+void BinaryTree::inorder(){
+  inorderHelper(root);
+  cout << endl;
+}
+
+void BinaryTree::inorderHelper(Node * root){
+  if(root != NULL){
+    inorderHelper(root->getLeft());
+    cout << root->getData() << ' ';
+    inorderHelper(root->getRight());
+  }
+}
+
+void BinaryTree::postorder(){
+  postorderHelper(root);
+  cout << endl;
+}
+
+void BinaryTree::postorderHelper(Node * root){
+  if(root != NULL){
+    postorderHelper(root->getLeft());
+    postorderHelper(root->getRight());
+    cout << root->getData() << ' ';
+  }
+}
+
+void BinaryTree::preorderNoRecursion(){
+  preorderNoRecursionHelper(root);
+  cout << endl;
+}
+
+void BinaryTree::preorderNoRecursionHelper(Node * root){
+  if(root == NULL){
+    return;
+  }
+  stack<Node *> nodes;
+  nodes.push(root);
+  while(!nodes.empty()){
+    Node * parent = nodes.top();
+    cout << parent->getData() << ' ';
+    nodes.pop();
+    if(parent->getRight()){
+      nodes.push(parent->getRight());
+    }
+    if(parent->getLeft()){
+      nodes.push(parent->getLeft());
+    }
+  }
+}
+
+BinaryTree::Node* BinaryTree::findLowestCommonAncestor(int val1, int val2){
+  return findLowestCommonAncestorHelper(root, val1, val2);
+}
+
+BinaryTree::Node* BinaryTree::findLowestCommonAncestorHelper(Node * root, int val1, int val2){
+  Node * parent = root;
+  while(parent){
+    if(parent->getData() > val1 && parent->getData() > val2){
+      parent = parent->getLeft();
+    } else if(parent->getData() < val1 && parent->getData() < val2){
+      parent = parent->getRight();
+    } else {
+      return parent;
+    }
+  }
+  return NULL;
+}
+
 int main(){
   BinaryTree bt;
   int num;
   char input;
   do{
+    cout << endl;
     cout << "q: quit | i: insert | r: remove | s: search | p: show structure | h: height" << endl;
+    cout << "f: find lowest common ancestor" << endl;
+    cout << "0: preorder w/out recursion | 1: preorder | 2: in-order | 3: postorder" << endl;
     cin >> input;
     switch (input) {
       case 'i':
@@ -217,6 +312,37 @@ int main(){
         break;
       case 'h':
         cout << "Height is " << bt.height() << endl;
+        break;
+      case 'f':
+        int num1, num2;
+        cout << "Enter two numbers in the tree: ";
+        while(! (cin >> num1) || ! bt.search(num1)){
+          cout << "Error: enter a number in the tree." << endl;
+          cin.clear();
+          cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        }
+        while(! (cin >> num2) || ! bt.search(num2)){
+          cout << "Error: enter a number in the tree." << endl;
+          cin.clear();
+          cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        }
+        cout << "Lowest common ancestor to " << num1 << " and " << num2 << ": " << bt.findLowestCommonAncestor(num1, num2)->getData() << endl;
+        break;
+      case '0':
+        cout << "Preorder traversal: ";
+        bt.preorderNoRecursion();
+        break;
+      case '1':
+        cout << "Preorder traversal: ";
+        bt.preorder();
+        break;
+      case '2':
+        cout << "Inorder traversal: ";
+        bt.inorder();
+        break;
+      case '3':
+        cout << "Postorder traversal: ";
+        bt.postorder();
         break;
       default:
         break;
