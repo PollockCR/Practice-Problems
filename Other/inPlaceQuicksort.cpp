@@ -26,7 +26,7 @@ int main(){
 
 void quicksort(vector<int> &nums, int cur, int g, int numCount){
   int beg = cur, end = g, pivotIndex, pivot;
-  if(g >= numCount || cur < 0){
+  if(g >= numCount || cur < 0 || g <= 0 || cur >= numCount){
     return;
   }
   if((g - cur) < 2){
@@ -48,6 +48,9 @@ void quicksort(vector<int> &nums, int cur, int g, int numCount){
     } else {
       cur++;
     }
+  }
+  if(nums[g] < pivot){
+    g++;
   }
   swap(nums[g], nums[end]);
   quicksort(nums, beg, g-1, numCount);
